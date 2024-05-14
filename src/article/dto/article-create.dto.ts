@@ -5,4 +5,6 @@ export class ArticleCreateDto {
     message: 'Le titre doit contenir au moins 3 caractères',
   })
   title: string;
+  content: string;
+  author: string;
 }
