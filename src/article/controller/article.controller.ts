@@ -58,4 +58,14 @@ export class ArticleController {
   deleteArticle(@Param('id', ParseIntPipe) id: number) {
     return this.articleService.deleteArticle(id);
   }
+
+  //cette méthode va chercher des articles par autheur
+  // on peut passer en parametre du décorateur
+  // un segment d'url avec éventuellement des paramètres
+  // on peut ensuite récupérer sa valeur avec le décorateur @Param
+  @Get('/author/:author')
+  getArticlesByAuthor(@Param('author') author: string) {
+    //on appelle la méthode du service
+    return this.articleService.getArticlesByAuthor(author);
+  }
 }
