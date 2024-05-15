@@ -40,7 +40,7 @@ export class UserController {
     return this.getUserByIdService.getOneUserById(id);
   }
 
-  @Get('birthdayCity/:city')
+  @Get('by-birthday-city/:city')
   getUsersByBirthdayCity(@Param('city') city: string) {
     return this.getUsersByBirthdayCityService.getUsersByBirthdayCity(city);
   }
