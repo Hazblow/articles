@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcrypt';
+import { HashPasswordServiceInterface } from './hash-password.service.interface';
 
-export class HashPasswordService {
+export class HashPasswordService implements HashPasswordServiceInterface {
   async hashPassword(password: string) {
     try {
       //hash password with bcrypt
