@@ -3,8 +3,10 @@ import { Repository } from 'typeorm';
 import { User } from '../entity/user.entity';
 import { UserCreateDto } from '../dto/user-create.dto';
 import { HashPasswordService } from '../utils/hash-password.service';
+import { UserUpdateDto } from '../dto/user-update.dto';
+import { UserPasswordUpdateDto } from '../dto/user-password-update.dto';
 
-export class CreateUserService {
+export class UpdateUserPasswordService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
@@ -12,13 +14,14 @@ export class CreateUserService {
   ) {
   }
 
-  async createUser(data: UserCreateDto) {
+  async updateUserPassword(id: number, data: UserPasswordUpdateDto) {
     try {
-      data.password = await this.hashPasswordService.hashPassword(data.password);
-      return this.userRepository.save(data);
+      const user = await this.userRepository.findOneBy({ id });
+      user.password = await this.hashPasswordService.hashPassword(data.password);
+      return user;
     } catch (error) {
       console.log(error);
-      throw new Error('Error while creating user');
+      throw new Error('Error while updating user');
     }
   }
 }

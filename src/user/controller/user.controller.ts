@@ -1,21 +1,61 @@
 import {
   Body,
-  Controller,
-  Post,
+  Controller, Get, Param, ParseIntPipe,
+  Post, Put,
 } from '@nestjs/common';
 import { CreateUserService } from '../use-case/create-user.service';
 import { UserCreateDto } from '../dto/user-create.dto';
+import { GetAllUsersService } from '../use-case/get-all-users.service';
+import { GetUserByIdService } from '../use-case/get-user-by-id.service';
+import { UpdateUserService } from '../use-case/update-user.service';
+import { GetUsersByBirthdayCityService } from '../use-case/get-users-by-birthday-city.service';
+import { UserUpdateDto } from '../dto/user-update.dto';
+import { UserPasswordUpdateDto } from '../dto/user-password-update.dto';
+import { UpdateUserPasswordService } from '../use-case/update-user-password.service';
 
 
 @Controller('users')
 export class UserController {
   constructor(
     private readonly createUserService: CreateUserService,
-
+    private readonly getAllUsersService: GetAllUsersService,
+    private readonly getUserByIdService: GetUserByIdService,
+    private readonly updateUserService: UpdateUserService,
+    private readonly getUsersByBirthdayCityService: GetUsersByBirthdayCityService,
+    private readonly updateUserPasswordService: UpdateUserPasswordService,
   ) {}
 
   @Post()
   createUser(@Body() data: UserCreateDto) {
     return this.createUserService.createUser(data);
   }
+
+  @Get()
+  getAllUsers() {
+    return this.getAllUsersService.getAllUsers();
+  }
+
+  @Get(':id')
+  getUserById(@Param('id', ParseIntPipe) id: number) {
+    return this.getUserByIdService.getOneUserById(id);
+  }
+
+  @Get('birthdayCity/:city')
+  getUsersByBirthdayCity(@Param('city') city: string) {
+    return this.getUsersByBirthdayCityService.getUsersByBirthdayCity(city);
+  }
+
+  @Put(':id')
+  updateUser(@Param('id', ParseIntPipe) id: number, @Body() data: UserUpdateDto) {
+    return this.updateUserService.updateUser(id, data);
+  }
+
+  @Put(':id/password')
+  updateUserPassword(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() password: UserPasswordUpdateDto
+  ) {
+    return this.updateUserPasswordService.updateUserPassword(id, password);
+  }
+
 }

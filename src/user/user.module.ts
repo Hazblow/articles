@@ -5,6 +5,11 @@ import { CreateUserService } from './use-case/create-user.service';
 import { User } from './entity/user.entity';
 import { HashPasswordService } from './utils/hash-password.service';
 import { HashPasswordServiceInterface } from './utils/hash-password.service.interface';
+import { GetAllUsersService } from './use-case/get-all-users.service';
+import { GetUserByIdService } from './use-case/get-user-by-id.service';
+import { GetUsersByBirthdayCityService } from './use-case/get-users-by-birthday-city.service';
+import { UpdateUserService } from './use-case/update-user.service';
+import { UpdateUserPasswordService } from './use-case/update-user-password.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -12,13 +17,18 @@ import { HashPasswordServiceInterface } from './utils/hash-password.service.inte
   providers: [
     CreateUserService,
     HashPasswordService,
-    {
-      provide: CreateUserService,
-      useFactory: (passwordHasherService: HashPasswordServiceInterface) => {
-        return new CreateUserService(passwordHasherService);
-      },
-      inject: [HashPasswordService],
-    },
+    GetAllUsersService,
+    GetUserByIdService,
+    GetUsersByBirthdayCityService,
+    UpdateUserService,
+    UpdateUserPasswordService
+    // {
+    //   provide: CreateUserService,
+    //   useFactory: (passwordHasherService: HashPasswordServiceInterface) => {
+    //     return new CreateUserService(passwordHasherService);
+    //   },
+    //   inject: [HashPasswordService],
+    // },
   ],
 
 })
