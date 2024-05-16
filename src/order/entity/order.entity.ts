@@ -1,6 +1,12 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { OrderCreateDto } from '../dto/order-create.dto';
 
+enum OrderStatus {
+  CREATED = 'Créée',
+  PAID = 'Payée',
+  CANCELED = 'Annulée'
+}
+
 @Entity()
 export class Order {
   @PrimaryGeneratedColumn()
@@ -24,6 +30,9 @@ export class Order {
   @Column({ type: 'int' })
   total: number;
 
+  @Column({ type: 'date' , nullable: true})
+  paidAt: Date;
+
   constructor(data: OrderCreateDto) {
     if (data) {
       if (data.items.length > 3) {
@@ -33,8 +42,14 @@ export class Order {
       this.items = data.items;
       this.createdAt = new Date();
       this.updatedAt = null;
-      this.status = 'Crée';
+      this.status = OrderStatus.CREATED;
       this.total = 10 * data.items.length;
     }
+  }
+
+  pay() {
+    this.paidAt = new Date();
+    this.status = OrderStatus.PAID;
+    this.updatedAt = new Date();
   }
 }
