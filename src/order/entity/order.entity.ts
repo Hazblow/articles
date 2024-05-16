@@ -16,7 +16,7 @@ export class Order {
   customer: string;
 
   @Column({ type: 'json' })
-  items: object[];
+  items: string[];
 
   @Column({ type: 'varchar' })
   status: string;
@@ -26,7 +26,7 @@ export class Order {
 
   constructor(data: OrderCreateDto) {
     if (data) {
-      if (Object.keys(data.items).length > 3) {
+      if (data.items.length > 3) {
         throw new Error('Le nombre d\'items ne peut pas dépasser trois.');
       }
       this.customer = data.customer;
@@ -34,7 +34,7 @@ export class Order {
       this.createdAt = new Date();
       this.updatedAt = null;
       this.status = 'Crée';
-      this.total = data.total;
+      this.total = 10 * data.items.length;
     }
   }
 }
