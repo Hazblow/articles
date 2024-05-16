@@ -15,8 +15,6 @@ export class UpdateInvoiceAddressOrderService {
   async updateInvoiceAddress(id: number, data : OrderUpdateInvoiceAddressDto) {
     const order = await this.orderRepository.findOneBy({ id });
     order.updateInvoiceAddress(data);
-    await this.orderRepository.save(order);
-
-    return order;
+    return await this.orderRepository.save(order);
   }
 }
