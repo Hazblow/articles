@@ -4,13 +4,17 @@ import { OrderController } from './controller/order.controller';
 import { CreateOrderService } from './use-case/create-order.service';
 import { Order } from './entity/order.entity';
 import { PayOrderService } from './use-case/pay-order.service';
+import { UpdateInvoiceAddressOrderService } from './use-case/update-invoice-address-order.service';
+import { UpdateShippingOrderService } from './use-case/update-shipping-order.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Order])],
   controllers: [OrderController],
   providers: [
     CreateOrderService,
-    PayOrderService
+    PayOrderService,
+    UpdateShippingOrderService,
+    UpdateInvoiceAddressOrderService,
   ],
 })
 export class OrderModule {
