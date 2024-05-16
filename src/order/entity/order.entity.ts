@@ -3,12 +3,6 @@ import { OrderCreateDto } from '../dto/order-create.dto';
 import { OrderUpdateShippingDto } from '../dto/order-update-shipping.dto';
 import { OrderUpdateInvoiceAddressDto } from '../dto/order-update-invoice-address.dto';
 
-enum OrderStatus {
-  CREATED = 'Créée',
-  PAID = 'Payée',
-  CANCELED = 'Annulée'
-}
-
 @Entity()
 export class Order {
   @PrimaryGeneratedColumn()
@@ -50,6 +44,12 @@ export class Order {
   @Column({ type: 'date', nullable: true })
   invoiceAddressSetAt: Date;
 
+  static OrderStatus = {
+    CREATED: 'Créée',
+    PAID: 'Payée',
+    CANCELED: 'Annulée'
+  }
+
 
   constructor(data: OrderCreateDto) {
     if (data) {
@@ -60,7 +60,7 @@ export class Order {
       this.items = data.items;
       this.createdAt = new Date();
       this.updatedAt = null;
-      this.status = OrderStatus.CREATED;
+      this.status = Order.OrderStatus.CREATED;
       this.total = 10 * data.items.length;
       this.paidAt = null;
       this.shippingAddress = null;
@@ -73,7 +73,7 @@ export class Order {
 
   pay() {
     this.paidAt = new Date();
-    this.status = OrderStatus.PAID;
+    this.status = Order.OrderStatus.PAID;
     this.updatedAt = new Date();
   }
 
