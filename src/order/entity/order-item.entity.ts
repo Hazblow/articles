@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { OrderCreateDto } from '../dto/order-create.dto';
 import { OrderUpdateShippingDto } from '../dto/order-update-shipping.dto';
 import { OrderUpdateInvoiceAddressDto } from '../dto/order-update-invoice-address.dto';
 import { OrderItemCreateDto } from '../dto/order-item-create.dto';
+import { Order } from './order.entity';
 
 @Entity()
 export class OrderItem {
@@ -17,6 +18,9 @@ export class OrderItem {
 
   @Column({ type: 'int', nullable: true })
   price: number;
+
+  @ManyToOne(() => Order, (order) => order.items)
+  order: Order;
 
   constructor(data: OrderItemCreateDto) {
     if (data) {

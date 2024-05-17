@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { OrderCreateDto } from '../dto/order-create.dto';
 import { OrderUpdateShippingDto } from '../dto/order-update-shipping.dto';
 import { OrderUpdateInvoiceAddressDto } from '../dto/order-update-invoice-address.dto';
@@ -18,7 +18,7 @@ export class Order {
   @Column({ type: 'varchar' })
   customer: string;
 
-  @Column({ type: 'json' , nullable: true})
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.order, { cascade: true })
   items: OrderItem[];
 
   @Column({ type: 'varchar' })
@@ -67,18 +67,6 @@ export class Order {
       this.invoiceAddressSetAt = null;
 
       this.items = [];
-
-      for (const item of data.items) {
-        const existingItem = this.items.find(i => i.product === item.product);
-        if (existingItem) {
-          existingItem.quantity += item.quantity;
-          this.total += this.calculateTotal(item.quantity, item.price);
-        } else {
-          const orderItem = new OrderItem(item);
-          this.addItem(orderItem);
-          this.total += this.calculateTotal(orderItem.quantity, orderItem.price);
-        }
-      }
     }
   }
 
