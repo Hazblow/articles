@@ -3,6 +3,7 @@ import { Order } from '../entity/order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from '../../article/entity/article.entity';
 import { Repository } from 'typeorm';
+import { OrderItem } from '../entity/order-item.entity';
 export class CreateOrderService {
   constructor(
     @InjectRepository(Order)
