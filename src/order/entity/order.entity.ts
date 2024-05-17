@@ -67,6 +67,18 @@ export class Order {
       this.invoiceAddressSetAt = null;
 
       this.items = [];
+
+      for (const item of data.items) {
+        const existingItem = this.items.find(i => i.product === item.product);
+        if (existingItem) {
+          existingItem.quantity += item.quantity;
+          this.total += this.calculateTotal(item.quantity, item.price);
+        } else {
+          const orderItem = new OrderItem(item);
+          this.addItem(orderItem);
+          this.total += this.calculateTotal(orderItem.quantity, orderItem.price);
+        }
+      }
     }
   }
 

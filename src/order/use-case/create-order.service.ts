@@ -14,17 +14,6 @@ export class CreateOrderService {
   async createOrder(data: OrderCreateDto) {
     try {
       const order = new Order(data);
-      for (const item of data.items) {
-        const existingItem = order.items.find(i => i.product === item.product);
-        if (existingItem) {
-          existingItem.quantity += item.quantity;
-          order.total += order.calculateTotal(item.quantity, item.price);
-        } else {
-          const orderItem = new OrderItem(item);
-          order.addItem(orderItem);
-          order.total += order.calculateTotal(orderItem.quantity, orderItem.price);
-        }
-      }
       return this.orderRepository.save(order);
     } catch (error) {
       console.log(error);
