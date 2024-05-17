@@ -22,11 +22,11 @@ export class OrderItem {
   @ManyToOne(() => Order, (order) => order.items)
   order: Order;
 
-  constructor(data: OrderItemCreateDto) {
-    if (data) {
-      this.product = data.product;
-      this.quantity = data.quantity;
-      this.price = data.price;
-    }
-  }
+  // constructor(data: OrderItemCreateDto) {
+  //   if (data) {
+  //     this.product = data.product;
+  //     this.quantity = data.quantity;
+  //     this.price = data.price;
+  //   }
+  // }
 }
