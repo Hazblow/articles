@@ -11,4 +11,6 @@ export class UserCreateDto {
   age: number;
   @IsString()
   birthdayCity: string;
+  @IsString()
+  email: string;
 }

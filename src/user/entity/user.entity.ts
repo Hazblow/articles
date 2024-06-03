@@ -20,4 +20,7 @@ export class User {
   @Column({ type: 'varchar' , nullable: true})
   birthdayCity: string;
 
+  @Column({ type: 'varchar', unique: true, nullable: true })
+  email: string;
+
 }

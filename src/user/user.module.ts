@@ -10,6 +10,8 @@ import { GetUserByIdService } from './use-case/get-user-by-id.service';
 import { GetUsersByBirthdayCityService } from './use-case/get-users-by-birthday-city.service';
 import { UpdateUserService } from './use-case/update-user.service';
 import { UpdateUserPasswordService } from './use-case/update-user-password.service';
+import { GetUserByEmailService } from './use-case/get-user-by-email.service';
+import { ComparePasswordService } from './utils/compare-password.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -21,7 +23,9 @@ import { UpdateUserPasswordService } from './use-case/update-user-password.servi
     GetUserByIdService,
     GetUsersByBirthdayCityService,
     UpdateUserService,
-    UpdateUserPasswordService
+    UpdateUserPasswordService,
+    GetUserByEmailService,
+    ComparePasswordService,
     // {
     //   provide: CreateUserService,
     //   useFactory: (passwordHasherService: HashPasswordServiceInterface) => {

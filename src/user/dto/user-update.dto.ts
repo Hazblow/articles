@@ -9,4 +9,6 @@ export class UserUpdateDto {
   age: number;
   @IsString()
   birthdayCity: string;
+  @IsString()
+  email: string;
 }
