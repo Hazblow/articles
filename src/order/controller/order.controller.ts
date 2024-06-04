@@ -6,7 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Put,
+  Put, UseGuards,
 } from '@nestjs/common';
 import { CreateOrderService } from '../use-case/create-order.service';
 import { OrderCreateDto } from '../dto/order-create.dto';
@@ -15,6 +15,7 @@ import { OrderUpdateShippingDto } from '../dto/order-update-shipping.dto';
 import { UpdateShippingOrderService } from '../use-case/update-shipping-order.service';
 import { UpdateInvoiceAddressOrderService } from '../use-case/update-invoice-address-order.service';
 import { OrderUpdateInvoiceAddressDto } from '../dto/order-update-invoice-address.dto';
+import { AuthGuard } from '../../auth/auth.guard';
 
 @Controller('orders')
 export class OrderController {
@@ -27,6 +28,7 @@ export class OrderController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
   createOrder(@Body() data: OrderCreateDto) {
     return this.createOrderService.createOrder(data);
   }
